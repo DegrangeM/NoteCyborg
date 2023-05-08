@@ -10,13 +10,33 @@
 </head>
 
 <body>
-    <div id="dropzone" style="background-color:red;height:200px;width:200px;">
-    </div>
+    <div id="dropzone"></div>
+    <div id="tuto">Glissez déposez ici le fichier<br />de notes exporté depuis pronote →</div>
     <style>
         body {
             background-image: url('fond.png');
         }
+        #tuto {
+            float:right;
+            color:white;
+            box-shadow:none;
+            text-shadow: 0px 0px 5px white, 0px 0px 10px white;
+            margin-top:110px;
+            margin-right:0px;
+            text-align: center;
+        }
+        body.ok #tuto {
+            display: none;
+        }
+        body > div, body > select {
+            display: none;
+        }
+        body.ok > div, body.ok > select, body > div#dropzone, body > div#tuto {
+            display: block;
+        }
         #dropzone {
+            height:200px;
+            width:200px;
             background-image: url('cyborg.png');
             background-size: cover;
             box-shadow: 0px 0px 5px 5px white;
@@ -43,6 +63,7 @@
         // Add a drag & drop event listener on body and read the content of the csv file in pure javascript
         document.getElementById('dropzone').addEventListener('drop', function (e) {
             document.getElementById('dropzone').classList.remove('dragover');
+            document.body.classList.add('ok');
             e.preventDefault();
             e.stopPropagation();
             var files = e.dataTransfer.files;
