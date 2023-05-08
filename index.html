@@ -145,6 +145,7 @@
             let eleve = parseInt(this.value);
             if (eleve === -1) {
                 data[data.length - 1].visible = false;
+                Plotly.redraw('plot');
             } else {
                 data[data.length - 1].visible = true;
                 eleveScatter.y = notes.map(x => x[eleve]);
