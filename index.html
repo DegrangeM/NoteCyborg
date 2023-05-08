@@ -39,6 +39,7 @@
         // create Boxplot
 
         var trace1 = {
+            x: Array(notes.length).fill(0),
             y: notes,
             type: 'box',
             name: 'All Students',
@@ -58,6 +59,7 @@
         };
 
         var trace2 = {
+            x: Array(notes2.length).fill(1),
             y: notes2,
             type: 'box',
             name: 'All Students',
@@ -77,10 +79,15 @@
         };
 
         var trace3 = {
-            x: ['a', 'b'],
-            y: [11, 8],
+            x: [0, 1],
+            y: [25, 70],
             type: 'scatter',
-            mode: 'lines',
+            mode: 'note',
+            error_x: {
+                type: 'constant',
+                value: 0.25,
+                color: 'red'
+            }
         };
 
         var data = [trace1, trace2, trace3];
@@ -117,7 +124,6 @@
             yaxis: {
                 zeroline: false
             },
-            boxmode: 'group',
             updatemenus: updatemenus
         };
 
