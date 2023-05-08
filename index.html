@@ -11,8 +11,8 @@
 
 <body>
     <div id="dropzone" style="background-color:red;height:100px;width:100px;">
-        <div id="plot" style="width:600px;height:600px;"></div>
     </div>
+    <div id="plot" style="width:600px;height:600px;"></div>
     <script>
         // Add a drag & drop event listener on body and read the content of the csv file in pure javascript
         document.getElementById('dropzone').addEventListener('drop', function (e) {
@@ -23,7 +23,9 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 var text = reader.result;
-                console.log(text);
+                let lines = text.split('\n');
+                lines = lines.map(line=>line.split(';'));
+                console.log(lines);
             }
             reader.readAsText(file);
         });
