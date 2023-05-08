@@ -34,14 +34,14 @@
                     x = x.split('-/');
                     if (x.length == 1) {
                         return {
+                            coeff: parseFloat(x[0]),
                             max: 20,
-                            coeff: x[0],
                             date: datesEvals[i]
                         };
                     } else {
                         return {
-                            max: x[0],
-                            coeff: x[1],
+                            coeff: parseFloat(x[0]),
+                            max: parseFloat(x[1]),
                             date: datesEvals[i]
                         };
                     }
@@ -53,16 +53,23 @@
                 notes = notes[0].map((col, i) => notes.map(row => row[i]));
                 // On nettoie les notes
                 notes = notes.map(
-                    x => (x.map(
-                        y => {
+                    (x,i) => {
+                        let max = infosEvals[i].max;
+                        return x.map(
+                        (y) => {
                             y = y.replaceAll('"', '');
                             if(y.match(/^[0-9]+(?:,[0-9]*)$/)) {
-                                return parseFloat(y.replaceAll(',', '.')); // On a un nombre
+                                y = parseFloat(y.replaceAll(',', '.')); // On a un nombre
+                                // Normalisaiton des notes (sur 20)
+                                if(max !== 20) {
+                                    y = Math.round(y * (20 / max) * 100) / 100;
+                                }
+                                return y;
                             } else {
                                 return y; // On a du texte (abs, etc.)
                             }
-                        })
-                    )
+                        });
+                    }
                 );
 
                 console.log(window.notes);
