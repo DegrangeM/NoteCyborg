@@ -83,6 +83,7 @@
                         x: Array(x.filter(x => typeof (x) == 'number').length).fill(i),
                         y: x.filter(x => typeof (x) == 'number'),
                         text: eleves.filter((x, j) => typeof (notes[i][j]) == 'number'),
+                        hoverinfo: 'y+text',
                         type: 'box',
                         name: infosEvals[i].date + ' (' + infosEvals[i].coeff + ')',
                         boxpoints: 'all',
