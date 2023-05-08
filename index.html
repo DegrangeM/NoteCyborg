@@ -82,6 +82,7 @@
                     return {
                         x: Array(x.filter(x => typeof (x) == 'number').length).fill(i),
                         y: x.filter(x => typeof (x) == 'number'),
+                        text: eleves.filter((x, j) => typeof (notes[i][j]) == 'number'),
                         type: 'box',
                         name: infosEvals[i].date + ' (' + infosEvals[i].coeff + ')',
                         boxpoints: 'all',
@@ -91,7 +92,7 @@
                         marker: { size: 2, color: 'hsl(220, 100%, ' + lum + '%)' },
                         line: { width: 1 },
                         width: 0.5,
-                        pointpos: 0
+                        pointpos: 0,
                     };
                 });
                 Object.assign(data, newData);
