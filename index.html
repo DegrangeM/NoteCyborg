@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteCyborg</title>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="dropzone" style="background-color:red;height:100px;width:100px;">
+        <div id="plot" style="width:600px;height:600px;"></div>
+    </div>
+    <script>
+        // Add a drag & drop event listener on body and read the content of the csv file in pure javascript
+        document.getElementById('dropzone').addEventListener('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var files = e.dataTransfer.files;
+            var file = files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var text = reader.result;
+                console.log(text);
+            }
+            reader.readAsText(file);
+        });
+
+        document.getElementById('dropzone').addEventListener('dragover', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        notes = [38, 28.75, 23.5, 15.75, 28.25, 13.25, 33, 30, 31.5, 33.75, 12.5, 25, 34.75, 26.25, 27.5, 18.75, 28.5, 21.5, 26, 22.25, 12.25, 33, 30.5, 14.37, 33.25]
+        notes2 = [88, 63, 89, 90, 87, 53, 85, 90, 88, 89, 86, 82, 90, 56, 32, 44, 86, 57, 90, 89, 87, 90, 83, 34, 90]
+
+        // create Boxplot
+
+        var trace1 = {
+            y: notes,
+            type: 'box',
+            name: 'All Students',
+            marker: {
+                color: 'rgb(7,40,89)'
+            },
+            boxpoints: 'all',
+            jitter: 0.5,
+            whiskerwidth: 0.2,
+            fillcolor: 'cls',
+            marker: {
+                size: 2
+            },
+            line: {
+                width: 1
+            }
+        };
+
+        var trace2 = {
+            y: notes2,
+            type: 'box',
+            name: 'All Students',
+            marker: {
+                color: 'rgb(7,40,89)'
+            },
+            boxpoints: 'all',
+            jitter: 0.5,
+            whiskerwidth: 0.2,
+            fillcolor: 'cls',
+            marker: {
+                size: 2
+            },
+            line: {
+                width: 1
+            }
+        };
+
+        var trace3 = {
+            x: ['a', 'b'],
+            y: [11, 8],
+            type: 'scatter',
+            mode: 'lines',
+        };
+
+        var data = [trace1, trace2, trace3];
+
+        // add a dropdown too choose between trace1 and trace2 with visible
+
+        var updatemenus = [
+            {
+                buttons: [
+                    {
+                        args: [{ 'visible': [true, false] }],
+                        label: 'trace1',
+                        method: 'update'
+                    },
+                    {
+                        args: [{ 'visible': [false, true] }],
+                        label: 'trace2',
+                        method: 'update'
+                    }
+                ],
+                direction: 'left',
+                pad: { 'r': 10, 't': 10 },
+                showactive: true,
+                type: 'buttons',
+                x: 0.1,
+                xanchor: 'left',
+                y: 1.1,
+                yanchor: 'top'
+            }
+        ]
+
+        var layout = {
+            title: 'Box Plot',
+            yaxis: {
+                zeroline: false
+            },
+            boxmode: 'group',
+            updatemenus: updatemenus
+        };
+
+
+        /*
+        // put the two boxplot side to side
+    
+        var layout = {
+            title: 'Box Plot',
+            yaxis: {
+                zeroline: false
+            },
+            boxmode: 'group'
+        };
+        */
+
+        /*
+    
+        var layout = {
+            title: 'Box Plot',
+            yaxis: {
+                autorange: true,
+                showgrid: true,
+                zeroline: true,
+                dtick: 5,
+                gridcolor: 'rgb(255, 255, 255)',
+                gridwidth: 1,
+                zerolinecolor: 'rgb(255, 255, 255)',
+                zerolinewidth: 2
+            },
+            margin: {
+                l: 40,
+                r: 30,
+                b: 80,
+                t: 100
+            },
+            paper_bgcolor: 'rgb(243, 243, 243)',
+            plot_bgcolor: 'rgb(243, 243, 243)',
+            showlegend: false
+        };
+    
+        */
+
+        Plotly.newPlot('plot', data, layout);
+
+    </script>
+</body>
+
+</html>
