@@ -12,6 +12,7 @@
 <body>
     <div id="dropzone"></div>
     <div id="tuto">Glissez déposez ici le fichier<br />de notes exporté depuis pronote →</div>
+    <div id="infos"><a href="https://github.com/DegrangeM/NoteCyborg#readme">Infos</a></div>
     <style>
         body {
             background-image: url('fond.png');
@@ -26,6 +27,18 @@
             top: 130px;
             right: 270px;
         }
+
+        #infos {
+            color: white;
+            box-shadow: none;
+            text-shadow: 0px 0px 2px white;
+            position: fixed;
+            margin:0px;
+            bottom: 10px;
+            right: 10px;
+            display: block;
+        }
+        #infos>a { color: white; }
 
         body.ok #tuto {
             display: none;
