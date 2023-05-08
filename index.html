@@ -43,20 +43,14 @@
             y: notes,
             type: 'box',
             name: 'All Students',
-            marker: {
-                color: 'rgb(7,40,89)'
-            },
             boxpoints: 'all',
             jitter: 0.5,
             whiskerwidth: 0.2,
             fillcolor: 'cls',
-            marker: {
-                size: 2
-            },
-            line: {
-                width: 1
-            },
-            width: 0.5
+            marker: { size: 2 },
+            line: { width: 1 },
+            width: 0.5,
+            pointpos: 0
         };
 
         var trace2 = {
@@ -64,27 +58,21 @@
             y: notes2,
             type: 'box',
             name: 'All Students',
-            marker: {
-                color: 'rgb(7,40,89)'
-            },
             boxpoints: 'all',
             jitter: 0.5,
             whiskerwidth: 0.2,
             fillcolor: 'cls',
-            marker: {
-                size: 2
-            },
-            line: {
-                width: 1
-            },
-            width: 0.5
+            marker: { size: 2 },
+            line: { width: 1 },
+            width: 0.5,
+            pointpos: 0
         };
 
         var trace3 = {
             x: [0, 1],
             y: [25, 70],
             type: 'scatter',
-            mode: 'note',
+            mode: 'none',
             error_x: {
                 type: 'constant',
                 value: 0.25,
