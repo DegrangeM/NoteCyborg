@@ -14,7 +14,9 @@
     </div>
     <div id="plot" style="width:600px;height:600px;"></div>
     <select id="eleves">
+    </select> <select id="evals">
     </select>
+    <div id="histogramme" style="width:600px;height:600px;display:none;"></div>
     <script>
         // Add a drag & drop event listener on body and read the content of the csv file in pure javascript
         document.getElementById('dropzone').addEventListener('drop', function (e) {
@@ -116,6 +118,16 @@
                     return option;
                 }));
 
+                let aucunEval = document.createElement('option');
+                aucunEval.value = -1;
+                aucunEval.innerText = 'Aucune évaluation';
+                document.getElementById('evals').replaceChildren(aucunEval, ...infosEvals.map((x, i) => {
+                    let option = document.createElement('option');
+                    option.value = i;
+                    option.innerText = x.date + ' (' + x.coeff + ')';
+                    return option;
+                }));
+
                 Object.assign(data, newData);
                 Plotly.redraw('plot');
 
@@ -131,12 +143,23 @@
 
         document.getElementById('eleves').addEventListener('change', function () {
             let eleve = parseInt(this.value);
-            if(eleve === -1) {
+            if (eleve === -1) {
                 data[data.length - 1].visible = false;
             } else {
                 data[data.length - 1].visible = true;
                 eleveScatter.y = notes.map(x => x[eleve]);
                 Plotly.redraw('plot');
+            }
+        });
+
+        document.getElementById('evals').addEventListener('change', function () {
+            let ieval = parseInt(this.value);
+            if (ieval === -1) {
+                document.getElementById('histogramme').style.display = 'none';
+            } else {
+                dataHisto[0].x = notes[ieval].filter(x => typeof (x) == 'number');
+                Plotly.redraw('histogramme');
+                document.getElementById('histogramme').style.display = 'block';
             }
         });
 
@@ -169,6 +192,13 @@
 
 
         Plotly.newPlot('plot', data, layout, config);
+
+
+        var dataHisto = [{
+            type: 'histogram',
+        }];
+
+        Plotly.newPlot('histogramme', dataHisto);
 
     </script>
 </body>
