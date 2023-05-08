@@ -10,16 +10,39 @@
 </head>
 
 <body>
-    <div id="dropzone" style="background-color:red;height:100px;width:100px;">
+    <div id="dropzone" style="background-color:red;height:200px;width:200px;">
     </div>
+    <style>
+        body {
+            background-image: url('fond.png');
+        }
+        #dropzone {
+            background-image: url('cyborg.png');
+            background-size: cover;
+            box-shadow: 0px 0px 5px 5px white;
+            margin: 40px;
+            float: right;
+        }
+        #dropzone:hover, #dropzone.dragover {
+            filter: brightness(1.2);
+        }
+        body > * {
+            box-shadow: 0px 0px 3px 3px #db7d30, 0px 0px 5px 5px red, 0px 0px 7px 7px black;
+            margin: 40px;
+        }
+    </style>
     <div id="plot" style="width:600px;height:600px;"></div>
     <select id="eleves">
-    </select> <select id="evals">
+        <option value="-1">Aucun élève</option>
+    </select>
+    <select id="evals">
+        <option value="-1">Aucune évaluation</option>
     </select>
     <div id="histogramme" style="width:600px;height:600px;display:none;"></div>
     <script>
         // Add a drag & drop event listener on body and read the content of the csv file in pure javascript
         document.getElementById('dropzone').addEventListener('drop', function (e) {
+            document.getElementById('dropzone').classList.remove('dragover');
             e.preventDefault();
             e.stopPropagation();
             var files = e.dataTransfer.files;
@@ -139,6 +162,14 @@
         document.getElementById('dropzone').addEventListener('dragover', function (e) {
             e.preventDefault();
             e.stopPropagation();
+        });
+
+        document.getElementById('dropzone').addEventListener('dragenter', function (e) {
+            document.getElementById('dropzone').classList.add('dragover');
+        });
+
+        document.getElementById('dropzone').addEventListener('dragleave', function (e) {
+            document.getElementById('dropzone').classList.remove('dragover');
         });
 
         document.getElementById('eleves').addEventListener('change', function () {
