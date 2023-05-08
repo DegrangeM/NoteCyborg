@@ -96,6 +96,10 @@
                         pointpos: 0,
                     };
                 });
+
+                layout.xaxis.tickvals = infosEvals.map((x,i) => i);
+                layout.xaxis.ticktext = infosEvals.map(x => x.date + ' (' + x.coeff + ')');
+
                 Object.assign(data, newData);
                 Plotly.redraw('plot');
             }
@@ -125,11 +129,15 @@
         var layout = {
             title: 'Box Plot',
             yaxis: {
-                zeroline: false
+                zeroline: false,
+                range: [0, 20],
             }
         };
 
-        Plotly.newPlot('plot', data, layout);
+        var config = {locale: 'fr'};
+
+
+        Plotly.newPlot('plot', data, layout, config);
 
     </script>
 </body>
