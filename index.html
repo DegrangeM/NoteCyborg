@@ -196,9 +196,23 @@
 
         var dataHisto = [{
             type: 'histogram',
+            nbinsx: 21,
+            xbins: {
+                start: 0,
+                end: 20,
+                size: 1,
+            },
+            hoverinfo: 'x+y',
         }];
 
-        Plotly.newPlot('histogramme', dataHisto);
+        Plotly.newPlot('histogramme', dataHisto, {
+            xaxis: {
+                range: [0, 20],
+            },
+            yaxis: {
+                dtick: 1
+            }
+        });
 
     </script>
 </body>
