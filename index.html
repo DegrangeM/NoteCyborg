@@ -46,6 +46,9 @@
                         };
                     }
                 });
+
+                let coeffMax = Math.max(...infosEvals.map(x => x.coeff));
+
                 let eleves = lines.slice(2).map(line => line[0].replaceAll('"', ''));
                 eleves.pop(); // On enlève la dernière ligne qui contient les moyennes de classe
                 let notes = lines.slice(2).map(line => line.slice(colMoyenne + 1));
@@ -53,29 +56,45 @@
                 notes = notes[0].map((col, i) => notes.map(row => row[i]));
                 // On nettoie les notes
                 notes = notes.map(
-                    (x,i) => {
+                    (x, i) => {
                         let max = infosEvals[i].max;
                         return x.map(
-                        (y) => {
-                            y = y.replaceAll('"', '');
-                            if(y.match(/^[0-9]+(?:,[0-9]*)$/)) {
-                                y = parseFloat(y.replaceAll(',', '.')); // On a un nombre
-                                // Normalisaiton des notes (sur 20)
-                                if(max !== 20) {
-                                    y = Math.round(y * (20 / max) * 100) / 100;
+                            (y) => {
+                                y = y.replaceAll('"', '');
+                                if (y.match(/^[0-9]+(?:,[0-9]*)$/)) {
+                                    y = parseFloat(y.replaceAll(',', '.')); // On a un nombre
+                                    // Normalisaiton des notes (sur 20)
+                                    if (max !== 20) {
+                                        y = Math.round(y * (20 / max) * 100) / 100;
+                                    }
+                                    return y;
+                                } else {
+                                    return y; // On a du texte (abs, etc.)
                                 }
-                                return y;
-                            } else {
-                                return y; // On a du texte (abs, etc.)
-                            }
-                        });
+                            });
                     }
                 );
 
-                console.log(window.notes);
-                console.log(notes[0]);
-                data[0].y = notes[0].filter(x=>typeof(x)=='number');
-                data[0].x = Array(data[0].y.length).fill(0);
+                // On créé le graphique
+                newData = notes.map((x, i) => {
+                    let lum = parseInt(50 + 40 * (1 - infosEvals[i].coeff / coeffMax)); // Max coeff = 50%, 0 coeff = 90%
+                    console.log(lum);
+                    return {
+                        x: Array(x.filter(x => typeof (x) == 'number').length).fill(i),
+                        y: x.filter(x => typeof (x) == 'number'),
+                        type: 'box',
+                        name: infosEvals[i].date + ' (' + infosEvals[i].coeff + ')',
+                        boxpoints: 'all',
+                        jitter: 0.5,
+                        whiskerwidth: 0.2,
+                        fillcolor: 'cls',
+                        marker: { size: 2, color: 'hsl(220, 100%, ' + lum + '%)' },
+                        line: { width: 1 },
+                        width: 0.5,
+                        pointpos: 0
+                    };
+                });
+                Object.assign(data, newData);
                 Plotly.redraw('plot');
             }
             reader.readAsText(file);
@@ -85,41 +104,6 @@
             e.preventDefault();
             e.stopPropagation();
         });
-
-        notes = [38, 28.75, 23.5, 15.75, 28.25, 13.25, 33, 30, 31.5, 33.75, 12.5, 25, 34.75, 26.25, 27.5, 18.75, 28.5, 21.5, 26, 22.25, 12.25, 33, 30.5, 14.37, 33.25]
-        notes2 = [88, 63, 89, 90, 87, 53, 85, 90, 88, 89, 86, 82, 90, 56, 32, 44, 86, 57, 90, 89, 87, 90, 83, 34, 90]
-
-        // create Boxplot
-
-        var trace1 = {
-            x: Array(notes.length).fill(0),
-            y: notes,
-            type: 'box',
-            name: 'All Students',
-            boxpoints: 'all',
-            jitter: 0.5,
-            whiskerwidth: 0.2,
-            fillcolor: 'cls',
-            marker: { size: 2, color: 'hsl(220, 100%, 75%)' },
-            line: { width: 1 },
-            width: 0.5,
-            pointpos: 0
-        };
-
-        var trace2 = {
-            x: Array(notes2.length).fill(1),
-            y: notes2,
-            type: 'box',
-            name: 'All Students',
-            boxpoints: 'all',
-            jitter: 0.5,
-            whiskerwidth: 0.2,
-            fillcolor: 'cls',
-            marker: { size: 2, color: 'hsl(220, 100%, 50%)' },
-            line: { width: 1 },
-            width: 0.5,
-            pointpos: 0,
-        };
 
         var trace3 = {
             x: [0, 1],
@@ -133,7 +117,7 @@
             }
         };
 
-        var data = [trace1, trace2, trace3];
+        var data = [trace3];
 
 
         var layout = {
