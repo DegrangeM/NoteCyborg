@@ -1,6 +1,6 @@
 # NoteCyborg
 
-NoteCyborg est un outil qui permet d'analyser rapidement un fichier de note exporté depuis pronote.
+NoteCyborg est un outil qui permet d'analyser rapidement un fichier de notes exporté depuis pronote.
 
 - Affichage de diagrammes en boîte pour chaque évaluation
 
