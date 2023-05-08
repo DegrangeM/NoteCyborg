@@ -23,9 +23,51 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 var text = reader.result;
-                let lines = text.split('\n');
-                lines = lines.map(line=>line.split(';'));
-                console.log(lines);
+                let lines = text.split(/\r?\n/);
+                lines = lines.map(line => line.split(';'));
+                // Le fichier peut contenir des colonnes additionnelles (classe, etc.), il faut les gérer.
+                // Trouvons la colonne moyenne pour gérer ces colonnes aditionnelles
+                let colMoyenne = lines[1].indexOf('Moyenne');
+                let datesEvals = lines[0].slice(colMoyenne + 1);
+                let infosEvals = lines[1].slice(colMoyenne + 1);
+                infosEvals = infosEvals.map((x, i) => {
+                    x = x.split('-/');
+                    if (x.length == 1) {
+                        return {
+                            max: 20,
+                            coeff: x[0],
+                            date: datesEvals[i]
+                        };
+                    } else {
+                        return {
+                            max: x[0],
+                            coeff: x[1],
+                            date: datesEvals[i]
+                        };
+                    }
+                });
+                let eleves = lines.slice(2).map(line => line[0].replaceAll('"', ''));
+                eleves.pop(); // On enlève la dernière ligne qui contient les moyennes de classe
+                let notes = lines.slice(2).map(line => line.slice(colMoyenne + 1));
+                // Nous allons transposer notes
+                notes = notes[0].map((col, i) => notes.map(row => row[i]));
+                // On nettoie les notes
+                notes = notes.map(
+                    x => (x.map(
+                        y => {
+                            y = y.replaceAll('"', '').replaceAll(',', '.');
+                            let f = parseFloat(y);
+                            if (f.toString() === y) {
+                                return f; // On a un nombre
+                            } else {
+                                return y; // On a du texte (abs, etc.)
+                            }
+                        })
+                    )
+                );
+                console.log(notes);
+                console.log(infosEvals);
+                console.log(eleves);
             }
             reader.readAsText(file);
         });
@@ -84,7 +126,7 @@
 
         var data = [trace1, trace2, trace3];
 
-     
+
         var layout = {
             title: 'Box Plot',
             yaxis: {
