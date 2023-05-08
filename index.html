@@ -55,19 +55,21 @@
                 notes = notes.map(
                     x => (x.map(
                         y => {
-                            y = y.replaceAll('"', '').replaceAll(',', '.');
-                            let f = parseFloat(y);
-                            if (f.toString() === y) {
-                                return f; // On a un nombre
+                            y = y.replaceAll('"', '');
+                            if(y.match(/^[0-9]+(?:,[0-9]*)$/)) {
+                                return parseFloat(y.replaceAll(',', '.')); // On a un nombre
                             } else {
                                 return y; // On a du texte (abs, etc.)
                             }
                         })
                     )
                 );
-                console.log(notes);
-                console.log(infosEvals);
-                console.log(eleves);
+
+                console.log(window.notes);
+                console.log(notes[0]);
+                data[0].y = notes[0].filter(x=>typeof(x)=='number');
+                data[0].x = Array(data[0].y.length).fill(0);
+                Plotly.redraw('plot');
             }
             reader.readAsText(file);
         });
