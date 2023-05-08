@@ -16,37 +16,51 @@
         body {
             background-image: url('fond.png');
         }
+
         #tuto {
-            float:right;
-            color:white;
-            box-shadow:none;
+            color: white;
+            box-shadow: none;
             text-shadow: 0px 0px 5px white, 0px 0px 10px white;
-            margin-top:110px;
-            margin-right:0px;
             text-align: center;
+            position: fixed;
+            top: 130px;
+            right: 270px;
         }
+
         body.ok #tuto {
             display: none;
         }
-        body > div, body > select {
+
+        body>div,
+        body>select {
             display: none;
         }
-        body.ok > div, body.ok > select, body > div#dropzone, body > div#tuto {
+
+        body.ok>div,
+        body.ok>select,
+        body>div#dropzone,
+        body>div#tuto {
             display: block;
         }
+
         #dropzone {
-            height:200px;
-            width:200px;
+            height: 200px;
+            width: 200px;
             background-image: url('cyborg.png');
             background-size: cover;
             box-shadow: 0px 0px 5px 5px white;
             margin: 40px;
-            float: right;
+            position: fixed;
+            right: 40px;
+            top: 40px;
         }
-        #dropzone:hover, #dropzone.dragover {
+
+        #dropzone:hover,
+        #dropzone.dragover {
             filter: brightness(1.2);
         }
-        body > * {
+
+        body>* {
             box-shadow: 0px 0px 3px 3px #db7d30, 0px 0px 5px 5px red, 0px 0px 7px 7px black;
             margin: 40px;
         }
