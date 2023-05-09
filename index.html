@@ -131,13 +131,17 @@
                 // Le fichier peut contenir des colonnes additionnelles (classe, etc.), il faut les gérer.
                 // Trouvons la colonne moyenne pour gérer ces colonnes aditionnelles
                 let colMoyenne = lines[1].indexOf('Moyenne');
+                if(colMoyenne === -1) {
+                    // Il s'agit peut-être d'un export "Résultats > Tableau" multimatière ?
+                    colMoyenne = lines[0].indexOf('Moyenne');
+                }
                 let datesEvals = lines[0].slice(colMoyenne + 1);
                 let infosEvals = lines[1].slice(colMoyenne + 1);
                 infosEvals = infosEvals.map((x, i) => {
                     x = x.split('-/');
                     if (x.length == 1) {
                         return {
-                            coeff: parseFloat(x[0]),
+                            coeff: parseFloat(x[0]) || 0, // Si on a un coeff vide (possible en mode multi matière), on met 0
                             max: 20,
                             date: datesEvals[i]
                         };
@@ -181,7 +185,6 @@
                 // On créé le graphique
                 newData = notes.map((x, i) => {
                     let lum = parseInt(50 + 40 * (1 - infosEvals[i].coeff / coeffMax)); // Max coeff = 50%, 0 coeff = 90%
-                    console.log(lum);
                     return {
                         x: Array(x.filter(x => typeof (x) == 'number').length).fill(i),
                         y: x.filter(x => typeof (x) == 'number'),
