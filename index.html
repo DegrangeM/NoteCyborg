@@ -94,15 +94,26 @@
             box-shadow: 0px 0px 3px 3px #db7d30, 0px 0px 5px 5px red, 0px 0px 7px 7px black;
             margin: 40px;
         }
+
+        #plot {
+            width: 600px;
+            height: 600px;
+        }
+
+        #histogramme {
+            width: 600px;
+            height: 600px;
+            display:none;
+        }
     </style>
-    <div id="plot" style="width:600px;height:600px;"></div>
+    <div id="plot"></div>
     <select id="eleves">
         <option value="-1">Aucun élève</option>
     </select>
     <select id="evals">
         <option value="-1">Aucune évaluation</option>
     </select>
-    <div id="histogramme" style="width:600px;height:600px;display:none;"></div>
+    <div id="histogramme"></div>
     <script>
         // Add a drag & drop event listener on body and read the content of the csv file in pure javascript
         document.getElementById('dropzone').addEventListener('drop', function (e) {
