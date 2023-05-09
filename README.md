@@ -12,7 +12,7 @@ NoteCyborg est un outil qui permet d'analyser rapidement un fichier de notes exp
 
 ## Fonctionnement
 
-- Dans pronote, ouvrez la page de saisi des notes puis cliquez sur le bouton permettant d'exporter les résultats (en haut à droite de la liste des notes).
+- Dans pronote, ouvrez la page `Notes > Saisie` puis cliquez sur le bouton <img src="https://doc.index-education.com/fr-fr/pn-net/2022/professeurs/assets/images/_Boutons/Btn_CopierListe.jpg" /> permettant d'exporter les résultats (en haut à droite de la liste des notes).
 
 - Ouvrez la version en ligne de NoteCyborg : https://degrangem.github.io/NoteCyborg/
 
